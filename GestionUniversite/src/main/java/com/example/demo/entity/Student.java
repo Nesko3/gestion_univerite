@@ -1,0 +1,78 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+import java.util.List;
+
+@Entity
+public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @Size(min = 2, max = 50)
+    private String name;
+
+    @Email
+    private String email;
+
+    private String level;
+
+    @OneToMany(mappedBy = "student")
+    private List<Enrollement> enrollements;
+
+    public Student() {
+    }
+
+    public Student(Long id, String name, String email, String level) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.level = level;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public List<Enrollement> getEnrollements() {
+        return enrollements;
+    }
+
+    public void setEnrollments(List<Enrollement> enrollements) {
+        this.enrollements = enrollements;
+    }
+}

@@ -1,0 +1,51 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Grade {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	private double score;
+	
+	@OneToOne
+	private Enrollement enrollement;
+	
+	public Grade() {}
+	
+	public Grade(Long id, double score, Enrollement enrollement) {
+		this.id = id;
+		this.score = score;
+		this.enrollement = enrollement;
+	}
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	
+
+	public Enrollement getEnrollement() {
+		return enrollement;
+	}
+
+	public void setEnrollement(Enrollement enrollement) {
+		this.enrollement = enrollement;
+	}
+	
+	
+
+}

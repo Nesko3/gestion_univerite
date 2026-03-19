@@ -1,0 +1,22 @@
+package com.example.demo.entity;
+
+import jakarta.persistence.*;
+
+@Entity
+public class Grade {
+	@Id
+	@GeneratedValue
+	private Long id;
+	private double note;
+	
+	@OneToOne
+	private Enrollement enrollment;
+	
+	public Grade() {}
+	
+	public Grade(Long id, double note, Enrollement enrollment) {
+		
+	}
+	
+
+}

@@ -1,0 +1,68 @@
+package com.example.demo.service;
+
+import com.example.demo.entity.Enrollement;
+import com.example.demo.entity.Status;
+import com.example.demo.repository.EnrollementRepository;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class EnrollementService {
+
+    private final EnrollementRepository enrollementRepository;
+
+    public EnrollementService(EnrollementRepository enrollementRepository){
+        this.enrollementRepository = enrollementRepository;
+    }
+
+    public List<Enrollement> getAllEnrollements(){
+        return enrollementRepository.findAll();
+    }
+
+    public Optional<Enrollment> getEnrollementById(Long id){
+        return enrollementRepository.findById(id);
+    }
+
+    public Enrollment createEnrollment(Enrollement enrollment){
+
+        enrollment.setEnrollmentDate(LocalDate.now());
+        enrollment.setStatus(Status.PENDING);
+
+        return enrollmentRepository.save(enrollment);
+    }
+
+    public Enrollment updateEnrollment(Long id, Enrollment enrollment){
+
+        Optional<Enrollment> existingEnrollment = enrollmentRepository.findById(id);
+
+        if(existingEnrollment.isPresent()){
+            enrollment.setId(id);
+            return enrollmentRepository.save(enrollment);
+        }
+
+        return null;
+    }
+
+    public void deleteEnrollment(Long id){
+        enrollmentRepository.deleteById(id);
+    }
+
+    // VALIDATION (workflow)
+    public Enrollment validateEnrollment(Long id){
+
+        Optional<Enrollment> enrollment = enrollmentRepository.findById(id);
+
+        if(enrollment.isPresent()){
+
+            Enrollment e = enrollment.get();
+            e.setStatus(Status.VALIDATED);
+
+            return enrollmentRepository.save(e);
+        }
+
+        return null;
+    }
+}
